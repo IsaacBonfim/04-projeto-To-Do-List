@@ -67,6 +67,12 @@ ol {
   overflow-y: scroll;
 }
 
+li {
+  width: min-content;
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
 #texto-tarefa {
   font-family: Roboto, sans-serif;
   font-weight: 800;
