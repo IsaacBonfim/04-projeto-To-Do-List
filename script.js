@@ -2,6 +2,7 @@ const tarefa = document.getElementById('texto-tarefa');
 const botaoAddTarefa = document.getElementById('criar-tarefa');
 const listaTarefa = document.getElementById('lista-tarefas');
 const botaoRmvTarefa = document.getElementById('apaga-tudo');
+const removeFinalizados = document.getElementById('remover-finalizados');
 
 function limpaBg() {
   const itens = document.querySelectorAll('li');
@@ -56,3 +57,16 @@ function removeTarefa() {
 }
 
 botaoRmvTarefa.addEventListener('click', removeTarefa);
+
+function removeCompletos() {
+  const itens = document.querySelectorAll('li');
+  const aux = itens.length - 1;
+
+  for (let i = 0; i <= aux; i += 1) {
+    if (itens[i].className === 'completed') {
+      listaTarefa.removeChild(itens[i]);
+    }
+  }
+}
+
+removeFinalizados.addEventListener('click', removeCompletos);
