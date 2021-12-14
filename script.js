@@ -1,6 +1,7 @@
 const tarefa = document.getElementById('texto-tarefa');
 const botaoAddTarefa = document.getElementById('criar-tarefa');
 const listaTarefa = document.getElementById('lista-tarefas');
+const botaoRmvTarefa = document.getElementById('apaga-tudo');
 
 function limpaBg() {
   const itens = document.querySelectorAll('li');
@@ -44,3 +45,14 @@ function addTarefa() {
 }
 
 botaoAddTarefa.addEventListener('click', addTarefa);
+
+function removeTarefa() {
+  const itens = document.querySelectorAll('li');
+  const aux = itens.length - 1;
+
+  for (let i = 0; i <= aux; i += 1) {
+    listaTarefa.removeChild(itens[i]);
+  }
+}
+
+botaoRmvTarefa.addEventListener('click', removeTarefa);
