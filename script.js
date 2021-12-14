@@ -21,12 +21,23 @@ function mudaBg(evento) {
   }
 }
 
+function marcaTarefa(evento) {
+  const item = evento.target;
+
+  if (item.className === 'completed') {
+    item.className = '';
+  } else {
+    item.className = 'completed';
+  }
+}
+
 function addTarefa() {
   const itemLista = document.createElement('li');
   const item = tarefa.value;
 
   itemLista.textContent = item;
   itemLista.addEventListener('click', mudaBg);
+  itemLista.addEventListener('dblclick', marcaTarefa);
   tarefa.value = '';
 
   listaTarefa.appendChild(itemLista);
