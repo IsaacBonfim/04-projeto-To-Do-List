@@ -3,6 +3,7 @@ const botaoAddTarefa = document.getElementById('criar-tarefa');
 const listaTarefa = document.getElementById('lista-tarefas');
 const botaoRmvTarefa = document.getElementById('apaga-tudo');
 const removeFinalizados = document.getElementById('remover-finalizados');
+const saveList = document.getElementById('salvar-tarefas');
 
 function limpaBg() {
   const itens = document.querySelectorAll('li');
@@ -47,7 +48,7 @@ function addTarefa() {
 
 botaoAddTarefa.addEventListener('click', addTarefa);
 
-function removeTarefa() {
+function removeTarefas() {
   const itens = document.querySelectorAll('li');
   const aux = itens.length - 1;
 
@@ -56,7 +57,7 @@ function removeTarefa() {
   }
 }
 
-botaoRmvTarefa.addEventListener('click', removeTarefa);
+botaoRmvTarefa.addEventListener('click', removeTarefas);
 
 function removeCompletos() {
   const itens = document.querySelectorAll('li');
@@ -70,3 +71,49 @@ function removeCompletos() {
 }
 
 removeFinalizados.addEventListener('click', removeCompletos);
+
+function salvaLista() {
+  const lista = document.querySelector('ol');
+  const itens = document.querySelectorAll('li');
+  const aux = [];
+
+  for (let i = 0; i < itens.length; i += 1) {
+    if (itens[i].className === 'completed') {
+      aux.push(true);
+    } else {
+      aux.push(false);
+    }
+  }
+
+  localStorage.setItem('itens', JSON.stringify(lista.innerText));
+  localStorage.setItem('class', JSON.stringify(aux));
+}
+
+saveList.addEventListener('click', salvaLista);
+
+function remontaLista(array1, array2) {
+  for (let i = 0; i < array1.length; i += 1) {
+    const itemLista = document.createElement('li');
+
+    itemLista.textContent = array1[i];
+    itemLista.addEventListener('click', mudaBg);
+    itemLista.addEventListener('dblclick', marcaTarefa);
+
+    if (array2[i] === true) {
+      itemLista.className = 'completed';
+    }
+    listaTarefa.appendChild(itemLista);
+  }
+}
+
+function carregaLista() {
+  if (localStorage.getItem('itens') !== null) {
+    const aux = JSON.parse(localStorage.getItem('itens'));
+    const itens = aux.split('\n');
+    const classe = JSON.parse(localStorage.getItem('class'));
+
+    remontaLista(itens, classe);
+  }
+}
+
+window.onload = carregaLista;
