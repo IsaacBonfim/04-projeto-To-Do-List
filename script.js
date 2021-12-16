@@ -4,24 +4,29 @@ const listaTarefa = document.getElementById('lista-tarefas');
 const botaoRmvTarefa = document.getElementById('apaga-tudo');
 const removeFinalizados = document.getElementById('remover-finalizados');
 const saveList = document.getElementById('salvar-tarefas');
+const paraCima = document.getElementById('mover-cima');
+const paraBaixo = document.getElementById('mover-baixo');
+
+const cinza = 'rgb(128, 128, 128)';
+const mintCream = 'rgba(240 , 247 , 244 , 1)';
 
 function limpaBg() {
   const itens = document.querySelectorAll('li');
 
   for (let i = 0; i < itens.length; i += 1) {
-    itens[i].style.background = 'rgba(240 , 247 , 244 , 1)';
+    itens[i].style.background = mintCream;
   }
 }
 
 function mudaBg(evento) {
   const item = evento.target;
 
-  if (item.style.backgroundColor === 'rgb(128, 128, 128)') {
-    item.style.backgroundColor = 'rgba(240 , 247 , 244 , 1)';
-  } else {
+  if (item.style.backgroundColor !== cinza) {
+    // item.style.backgroundColor = mintCream;
     limpaBg();
-    item.style.backgroundColor = 'rgb(128, 128, 128)';
-  }
+    item.style.backgroundColor = cinza;
+  } // else {
+  // }
 }
 
 function marcaTarefa(evento) {
@@ -117,3 +122,53 @@ function carregaLista() {
 }
 
 window.onload = carregaLista;
+
+function trocaClasse(a, b) {
+  const x = a;
+  const y = b;
+
+  if (x.className === 'completed') {
+    x.className = '';
+    y.className = 'completed';
+  }
+}
+
+function moverParaCima() {
+  const itens = document.querySelectorAll('li');
+  let aux = '';
+
+  for (let i = 0; i < itens.length; i += 1) {
+    if (itens[i].style.backgroundColor === cinza && i !== 0) {
+      aux = itens[i - 1].textContent;
+      itens[i - 1].textContent = itens[i].textContent;
+      itens[i - 1].style.backgroundColor = cinza;
+      itens[i].textContent = aux;
+      itens[i].style.backgroundColor = mintCream;
+
+      trocaClasse(itens[i], itens[i - 1]);
+    }
+  }
+}
+
+paraCima.addEventListener('click', moverParaCima);
+
+function moverParaBaixo() {
+  const itens = document.querySelectorAll('li');
+  let aux = '';
+
+  for (let i = 0; i < itens.length; i += 1) {
+    if (itens[i].style.backgroundColor === cinza && i !== itens.length - 1) {
+      aux = itens[i + 1].textContent;
+      itens[i + 1].textContent = itens[i].textContent;
+      itens[i + 1].style.backgroundColor = cinza;
+      itens[i].textContent = aux;
+      itens[i].style.backgroundColor = mintCream;
+
+      trocaClasse(itens[i], itens[i + 1]);
+
+      break;
+    }
+  }
+}
+
+paraBaixo.addEventListener('click', moverParaBaixo);
