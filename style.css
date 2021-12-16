@@ -109,6 +109,8 @@ button {
 aside button {
   margin-top: 10px;
   margin-bottom: 10px;
+  width: 110px;
+  height: fit-content;
 }
 
 button:hover {

@@ -6,6 +6,7 @@ const removeFinalizados = document.getElementById('remover-finalizados');
 const saveList = document.getElementById('salvar-tarefas');
 const paraCima = document.getElementById('mover-cima');
 const paraBaixo = document.getElementById('mover-baixo');
+const removeSelecionado = document.getElementById('remover-selecionado');
 
 const cinza = 'rgb(128, 128, 128)';
 const mintCream = 'rgba(240 , 247 , 244 , 1)';
@@ -172,3 +173,15 @@ function moverParaBaixo() {
 }
 
 paraBaixo.addEventListener('click', moverParaBaixo);
+
+function removerSelecionado() {
+  const itens = document.querySelectorAll('li');
+
+  for (let i = 0; i < itens.length; i += 1) {
+    if (itens[i].style.backgroundColor === cinza) {
+      listaTarefa.removeChild(itens[i]);
+    }
+  }
+}
+
+removeSelecionado.addEventListener('click', removerSelecionado);
